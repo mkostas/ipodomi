@@ -103,12 +103,40 @@
 
             $('#table').DataTable({
                 // "iDisplayLength": 25
+            });
+            $('#table2').DataTable({
+                // "iDisplayLength": 25
                 // Sort image
                 "aoColumnDefs": [
                     {"aTargets": [ 1 ], "sType": "image" }
                 ],
                 "aaSorting": [[ 1, "desc" ]] // Column to sort by default
-            });            
+            });
+
+            $('#table3').DataTable({
+                // "iDisplayLength": 25
+                // Sort image
+                "aoColumnDefs": [
+                    {"aTargets": [ 2 ], "sType": "image" }
+                ],
+                // "aaSorting": [[ 1, "asc" ]] Column to sort by default
+            });
+            $('#table4').DataTable({
+                // "iDisplayLength": 25
+                // Sort image
+                "aoColumnDefs": [
+                    {"aTargets": [ 3 ], "sType": "image" }
+                ],
+                // "aaSorting": [[ 1, "asc" ]] Column to sort by default
+            });
+            $('#table89').DataTable({
+                // "iDisplayLength": 25
+                // Sort image
+                "aoColumnDefs": [
+                    {"aTargets": [ 7,8 ], "sType": "image" }
+                ],
+                // "aaSorting": [[ 1, "asc" ]] Column to sort by default
+            });        
         });
 
         // FileManager

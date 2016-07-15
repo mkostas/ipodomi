@@ -9,7 +9,7 @@
     <div id="message_tab" class="alert alert-success">{{ Session::get('message') }}</div>
 @endif
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table2" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Χώρα</th>

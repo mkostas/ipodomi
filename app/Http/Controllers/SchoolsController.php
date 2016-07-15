@@ -10,6 +10,9 @@ use App\Email;
 use App\LettersOfIntent;
 use App\ProgramOfActivities;
 use App\Country;
+use App\Instructions;
+use App\SubmittedApplication;
+use App\CompletedApplication;
 use Illuminate\Contracts\Validation\Validator;
 
 class SchoolsController extends Controller
@@ -88,9 +91,25 @@ class SchoolsController extends Controller
 			LettersOfIntent::where("school_id", $id)->delete();
 		}
 
-		$record_program_of_activities = ProgramOfActivities::where("school_id", $id)->get();
+		$record_program_of_activities = ProgramOfActivities::where("school", $id)->get();
 		if ($record_program_of_activities->count()) {
-			ProgramOfActivities::where("school_id", $id)->delete();
+			ProgramOfActivities::where("school", $id)->delete();
+		}
+
+
+		$record_instructions = Instructions::where("school", $id)->get();
+		if ($record_instructions->count()) {
+			Instructions::where("school", $id)->delete();
+		}
+
+		$record_completed_applications = CompletedApplication::where("school", $id)->get();
+		if ($record_completed_applications->count()) {
+			CompletedApplication::where("school", $id)->delete();
+		}
+
+		$record_submitted_applications = SubmittedApplication::where("school", $id)->get();
+		if ($record_submitted_applications->count()) {
+			SubmittedApplication::where("school", $id)->delete();
 		}
 
 		session()->flash('message', 'Το σχολείο διαγράφηκε επιτυχώς!');

@@ -32,7 +32,7 @@
                         		data-toggle="modal" 
                         		data-target="#confirmDelete" 
                         		data-title="Διαργαφή Κατηγορίας" 
-                        		data-message="Είσαι σίγουρος(η) για την διαγραφή της κατηγορίας - {{ $company_category->type }}. Επίσης θα διαγραφούν και οι εταιρίες που ανήκουν στην κατηγορία αυτή!">
+                        		data-message="Είσαι σίγουρος(η) για την διαγραφή της κατηγορίας - {{ $company_category->type }}. Επίσης θα διαγραφούν οι εταιρίες, τα 'programs of activities', οι 'ολοκληρωμένες' και 'υποβληθείσες αιτήσεις' και οι 'οδηγίες' που ανήκουν στην κατηγορία αυτή!">
         						<i class="fa fa-lg fa-trash"></i>
         				</button>
                     </form>

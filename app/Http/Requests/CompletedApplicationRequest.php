@@ -25,6 +25,8 @@ class CompletedApplicationRequest extends Request
     {
         return [
             'filepath' => 'required|string',
+            'school' => 'required|int',
+            'company_category' => 'required|int',
             'lang' => 'required|int',
         ];
     }

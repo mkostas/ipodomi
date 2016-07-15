@@ -6,10 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubmittedApplication extends Model
 {
-    protected $fillable = [ 'name', 'filepath', 'lang' ];
+    protected $fillable = [ 'name', 'filepath', 'school', 'company_category', 'lang' ];
 
     public function languages()
     {
         return $this->hasMany('App\Language', 'id', 'lang');
+    }
+
+    public function schools()
+    {
+        return $this->belongsTo('App\School', 'school', 'id');
+    }
+
+    public function company_categories()
+    {
+        return $this->belongsTo('App\CompanyCategory', 'company_category', 'id');
     }
 }

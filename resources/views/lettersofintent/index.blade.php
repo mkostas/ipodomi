@@ -16,13 +16,13 @@
     <div id="message_tab" class="alert alert-success">{{ Session::get('message') }}</div>
 @endif
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table3" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Σχολείο</th>
             <th>Περιεχόμενο</th>
-            <th>Σχόλια</th>
             <th>Γλώσσα</th>
+            <th>Σχόλια</th>
             <th>Επεξεργασία/Διαγραφή</th>             
         </tr>
     </thead>
@@ -39,14 +39,14 @@
                             {{ getFirstWords($letter_of_intent->content, 30) }}
                     </a>
                 </td>
-                
-                <td>{{ $letter_of_intent->comments }}</td>
 
-	            <td>                   
+                <td>                   
                     @foreach ($letter_of_intent->languages as $language)
                         <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->name }}" alt="{{ $language->name }}">                        
                     @endforeach                   
-                </td>               
+                </td> 
+                
+                <td>{{ $letter_of_intent->comments }}</td>	                          
 
 	            <td style="text-align:center">
 	            	<a href="{{ url('', ['letters_of_intent', $letter_of_intent->id]) }}" class="btn btn-sm btn-info" style="margin-right:10px;" title="Επεξεργασία"><i class="fa fa-lg fa-edit"></i></a>

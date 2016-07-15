@@ -22,10 +22,11 @@
 
 <!-- .Filters -->
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table3" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Περιεχόμενο</th>
+            <th>Ειδικότητα</th>
             <th>Γλώσσα</th>
             <th>Επεξεργασία/Διαγραφή</th>             
         </tr>
@@ -43,10 +44,14 @@
                             {{ getFirstWords($part_text->content, 30) }}
                     </a>                    
                 </td>
+                <td>
+                    @foreach ($part_text->companyCategory as $companyCategory)
+                        {{ $companyCategory->type }}
+                    @endforeach
+                </td>
 	            <td>
                     @foreach ($part_text->languages as $language)
-                        <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->name }}" alt="{{ $language->name }}">
-                        
+                        <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->id }}" alt="{{ $language->id }}">                        
                     @endforeach
                 </td>	            
 	            <td style="text-align:center">

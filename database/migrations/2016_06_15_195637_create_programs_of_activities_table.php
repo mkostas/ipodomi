@@ -14,9 +14,10 @@ class CreateProgramsOfActivitiesTable extends Migration
     {
         Schema::create('programs_of_activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('school_id');
-            $table->text('content');
-            $table->text('comments');
+            $table->string('name');
+            $table->string('filepath');
+            $table->integer('school');
+            $table->integer('company_category');
             $table->integer('lang');
             $table->timestamps();
         });

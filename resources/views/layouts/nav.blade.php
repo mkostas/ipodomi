@@ -59,8 +59,7 @@
                         <i class="fa fa-sitemap"></i>&nbsp; Οργανωτικό τμήμα <span class="caret"></span>
                     </a> 
                     <ul class="dropdown-menu">
-                        <li><a href="{!! url('/letters_of_intent') !!}">Letter of Intent</a></li>
-                        <li><a href="{!! url('/program_of_activities') !!}">Program of activities</a></li>                        
+                        <li><a href="{!! url('/letters_of_intent') !!}">Letter of Intent</a></li>                                               
                         <li><a href="{!! url('/company') !!}">Εταιρείες για Πρακτική</a></li>
                     </ul>                  
                 </li>
@@ -72,6 +71,7 @@
                         <li><a href="{!! url('/completed_applications') !!}">Ολοκληρωμένες Αιτήσεις</a></li>
                         <li><a href="{!! url('/submitted_applications') !!}">Υποβληθείσες Αιτήσεις</a></li>
                         <li><a href="{!! url('/instructions') !!}">Οδηγίες</a></li>
+                        <li><a href="{!! url('/program_of_activities') !!}">Program of activities</a></li> 
                     </ul>                  
                 </li>              
             </ul>

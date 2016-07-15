@@ -8,15 +8,20 @@ class ProgramOfActivities extends Model
 {
     protected $table = 'programs_of_activities';
 
-    protected $fillable = [ 'school_id', 'content', 'comment', 'lang' ];
+    protected $fillable = [ 'name', 'filepath', 'school', 'company_category', 'lang' ];
 
     public function languages()
     {
         return $this->hasMany('App\Language', 'id', 'lang');
     }
-    
-    public function school()
+
+    public function schools()
     {
-        return $this->belongsTo('App\School');
+        return $this->belongsTo('App\School', 'school', 'id');
+    }
+
+    public function company_categories()
+    {
+        return $this->belongsTo('App\CompanyCategory', 'company_category', 'id');
     }
 }

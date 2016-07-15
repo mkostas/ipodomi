@@ -17,6 +17,7 @@ class CreatePartsTextTable extends Migration
             $table->integer('part_category');
             $table->string('content');
             $table->integer('lang');
+            $table->integer('company_category');
             $table->timestamps();
         });
     }

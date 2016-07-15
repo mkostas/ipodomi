@@ -16,6 +16,8 @@ class CreateSubmittedApplicationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('filepath');
+            $table->integer('school');
+            $table->integer('company_category');
             $table->integer('lang');
             $table->timestamps();
         });

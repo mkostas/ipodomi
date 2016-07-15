@@ -24,8 +24,9 @@ class ProgramOfActivitiesRequest extends Request
     public function rules()
     {
         return [
-            'school_id' => 'required|int',
-            'content' => 'required|string',
+            'filepath' => 'required|string',
+            'school' => 'required|int',
+            'company_category' => 'required|int',
             'lang' => 'required|int',
         ];
     }

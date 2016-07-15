@@ -8,7 +8,8 @@ use App\Http\Requests\CompletedApplicationRequest;
 use App\Http\Requests;
 use App\CompletedApplication;
 use App\Language;
-
+use App\CompanyCategory;
+use App\School;
 
 class CompletedApplicationsController extends Controller
 {
@@ -19,7 +20,7 @@ class CompletedApplicationsController extends Controller
      */
     public function index() {
         $completed_applications = CompletedApplication::select('completed_applications.*', 'languages.icon')->join('languages', 'completed_applications.lang', '=', 'languages.id')->where('is_valid',1)->orderBy('completed_applications.updated_at', 'desc')->get();
-        $languages = Language::all()->where('is_valid', 1);     
+        $languages = Language::all()->where('is_valid', 1);
         return view('completedapplications.index')->with(['completed_applications'=>$completed_applications, 'languages' => $languages]);
     }
 
@@ -31,7 +32,9 @@ class CompletedApplicationsController extends Controller
     public function create()
     {   
         $languages = Language::all()->where('is_valid', 1);
-        return view('completedapplications.create')->with(['languages'=>$languages]);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('completedapplications.create')->with(['languages'=>$languages, 'company_categories'=>$company_categories, 'schools'=>$schools]);
     }
 
     /**
@@ -44,6 +47,8 @@ class CompletedApplicationsController extends Controller
     {
         $record = new CompletedApplication;
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect
@@ -63,9 +68,12 @@ class CompletedApplicationsController extends Controller
         $lang = Language::where("slag", $language)->first();
         $completed_applications = CompletedApplication::with('languages')->where(["lang" => $lang->id ])->get();        
         $languages = Language::all()->where('is_valid', 1);       
-
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
         return view('completedapplications.index')->with(['completed_applications'=>$completed_applications,                                               
-                                                'languages'=>$languages,
+                                                'languages'=>$languages, 
+                                                'company_categories'=>$company_categories,
+                                                'schools'=>$schools,
                                                 ]);
     }
 
@@ -79,7 +87,9 @@ class CompletedApplicationsController extends Controller
     {
         $completed_applications = CompletedApplication::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
-        return view('completedapplications.edit')->with(['completed_applications'=>$completed_applications, 'languages'=>$languages]);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('completedapplications.edit')->with(['completed_applications'=>$completed_applications, 'languages'=>$languages, 'company_categories'=>$company_categories,'schools'=>$schools]);
     }
 
     /**
@@ -93,6 +103,8 @@ class CompletedApplicationsController extends Controller
     {
         $record = CompletedApplication::where("id", $id)->first();
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect

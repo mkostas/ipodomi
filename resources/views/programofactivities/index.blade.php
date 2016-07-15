@@ -16,58 +16,53 @@
     <div id="message_tab" class="alert alert-success">{{ Session::get('message') }}</div>
 @endif
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table4" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Σχολείο</th>
-            <th>Περιεχόμενο</th>
-            <th>Σχόλια</th>
-            <th>Γλώσσα</th>
-            <th>Επεξεργασία/Διαγραφή</th>             
+            <th style="width:60%">Όνομα αρχείου</th>
+            <th style="width:10%">Σχολείο</th>
+            <th style="width:10%">Ειδικότητα</th>
+            <th style="width:10%">Γλώσσα</th>
+            <th style="width:10%">Επεξεργασία/Διαγραφή</th>             
         </tr>
     </thead>
     <tbody>
-    	@foreach ($program_of_activities as $program_of_activity)            
-    		<tr>                
-                <td>{{ $program_of_activity->school->name }}</td>  
-
+        @foreach ($program_of_activities as $program_of_activity)            
+            <tr>                
                 <td>
-                    <a href="#content" 
-                        data-toggle="modal" 
-                        data-title="Περιεχόμενο" 
-                        data-message="{{ $program_of_activity->content }}">
-                            {{ getFirstWords($program_of_activity->content, 30) }}
-                    </a>
-                </td>
+                  <a href="{{ $program_of_activity->filepath }}" download>{{ $program_of_activity->name }}</a>                  
+              </td>
 
-                <td>{{ $program_of_activity->comments }}</td>
+              <td>{{ $program_of_activity->schools->name }}</td>
 
-	            <td>                   
-                    @foreach ($program_of_activity->languages as $language)
-                        <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->name }}" alt="{{ $language->name }}">                        
-                    @endforeach                   
-                </td>                
-
-	            <td style="text-align:center">
-	            	<a href="{{ url('', ['program_of_activities', $program_of_activity->id]) }}" class="btn btn-sm btn-info" style="margin-right:10px;" title="Επεξεργασία"><i class="fa fa-lg fa-edit"></i></a>
-	            	<form class="delete form-inline" method="POST" role="form"
+              <td>{{ $program_of_activity->company_categories->type }}</td>
+              
+              <td>
+                  @foreach ($program_of_activity->languages as $language)
+                      <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->name }}" alt="{{ $language->name }}">                        
+                  @endforeach 
+              </td>                         
+                
+                <td style="text-align:center">
+                    <a href="{{ url('', ['program_of_activities', $program_of_activity->id]) }}" class="btn btn-sm btn-info" style="margin-right:10px;" title="Επεξεργασία"><i class="fa fa-lg fa-edit"></i></a>
+                    <form class="delete form-inline" method="POST" role="form"
                           action="{{ url('', ['program_of_activities', $program_of_activity->id]) }}" style="display:inline">
                         
                         <input type="hidden" name="_method" value="DELETE">
-        				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <button type="button" class="btn btn-sm btn-danger" title="Διαγραφή"
-                        		data-toggle="modal" 
-                        		data-target="#confirmDelete" 
-                        		data-title="Διαργαφή Γλώσσας" 
-                        		data-message="Είσαι σίγουρος(η) για την διαγραφή της Επιστολής που αφορά το - {{ $program_of_activity->school->name }}">
-        						<i class="fa fa-lg fa-trash"></i>
-        				</button>
+                                data-toggle="modal" 
+                                data-target="#confirmDelete" 
+                                data-title="Διαργαφή Αρχείου" 
+                                data-message="Είσαι σίγουρος(η) για την διαγραφή του αρχείου - {{ $program_of_activity->name }}.">
+                                <i class="fa fa-lg fa-trash"></i>
+                        </button>
                     </form>
-	           	</td>
+                </td>
 
-	        </tr>
+            </tr>
 
-		@endforeach
+        @endforeach
         
     </tbody>
 </table>

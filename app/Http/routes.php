@@ -69,15 +69,6 @@ Route::get('/letters_of_intent/{id}', 'LettersOfIntentController@edit');
 Route::patch('/letters_of_intent/{id}', 'LettersOfIntentController@update');
 Route::delete('/letters_of_intent/{id}', 'LettersOfIntentController@destroy');
 
-// Program Of Activities
-Route::get('/program_of_activities', 'ProgramOfActivitiesController@index');
-Route::get('/program_of_activities/show/{language}', 'ProgramOfActivitiesController@show');
-Route::get('/program_of_activities/create', 'ProgramOfActivitiesController@create');
-Route::post('/program_of_activities/store', 'ProgramOfActivitiesController@store' );
-Route::get('/program_of_activities/{id}', 'ProgramOfActivitiesController@edit');
-Route::patch('/program_of_activities/{id}', 'ProgramOfActivitiesController@update');
-Route::delete('/program_of_activities/{id}', 'ProgramOfActivitiesController@destroy');
-
 // Company Category
 Route::get('/company_category', 'CompanyCategoryController@index');
 Route::get('/company_category/create', 'CompanyCategoryController@create');
@@ -120,3 +111,12 @@ Route::post('/submitted_applications/store', 'SubmittedApplicationsController@st
 Route::get('/submitted_applications/{id}', 'SubmittedApplicationsController@edit');
 Route::patch('/submitted_applications/{id}', 'SubmittedApplicationsController@update');
 Route::delete('/submitted_applications/{id}', 'SubmittedApplicationsController@destroy');
+
+// Program Of Activities
+Route::get('/program_of_activities', 'ProgramOfActivitiesController@index');
+Route::get('/program_of_activities/show/{language}', 'ProgramOfActivitiesController@show');
+Route::get('/program_of_activities/create', 'ProgramOfActivitiesController@create');
+Route::post('/program_of_activities/store', 'ProgramOfActivitiesController@store' );
+Route::get('/program_of_activities/{id}', 'ProgramOfActivitiesController@edit');
+Route::patch('/program_of_activities/{id}', 'ProgramOfActivitiesController@update');
+Route::delete('/program_of_activities/{id}', 'ProgramOfActivitiesController@destroy');

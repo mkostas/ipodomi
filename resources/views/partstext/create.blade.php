@@ -23,7 +23,22 @@
 		        <div class="form-group">
 		            <label>Περιεχόμενο <span class="red">*</span></label>
 		            <textarea class="form-control" rows="15" name="content" >{{ old('content') }}</textarea>		            
-		        </div>		        
+		        </div>
+
+		        <div class="form-group">
+				  	<label for="sel1">Κατηγορία Εταιρίας <span class="red">*</span></label>				  	
+				  	<select class="form-control select2" name="company_category">
+				  		<option value="" selected>{{ 'Επιλέξτε' }}</option>
+					    @foreach ($company_categories as $company_category)
+					    	@if (old('category_id') == $company_category->id)
+			                	<option value="{{ $company_category->id }}" selected>{{ $company_category->type }}</option>
+			                @else
+			                	<option value="{{ $company_category->id }}">{{ $company_category->type }}</option>
+			                @endif
+			            @endforeach
+				  	</select>
+				</div>
+
 		        <div class="form-group">
 				  	<label>Γλώσσα <span class="red">*</span></label>				  	
 				  	<select class="form-control select2" name="lang">

@@ -7,6 +7,7 @@ use App\Http\Requests\ProgramOfActivitiesRequest;
 use App\Http\Requests;
 use App\ProgramOfActivities;
 use App\Language;
+use App\CompanyCategory;
 use App\School;
 
 class ProgramOfActivitiesController extends Controller
@@ -19,8 +20,8 @@ class ProgramOfActivitiesController extends Controller
     public function index()
     {
         $program_of_activities = ProgramOfActivities::select('programs_of_activities.*', 'languages.icon')->join('languages', 'programs_of_activities.lang', '=', 'languages.id')->where('is_valid',1)->orderBy('programs_of_activities.updated_at', 'desc')->get();
-        $languages = Language::all()->where('is_valid', 1);        
-        return view('programofactivities.index')->with(['program_of_activities'=>$program_of_activities, 'languages'=>$languages]);
+        $languages = Language::all()->where('is_valid', 1); 
+        return view('programofactivities.index')->with(['program_of_activities'=>$program_of_activities, 'languages' => $languages]);
     }
 
     /**
@@ -30,10 +31,10 @@ class ProgramOfActivitiesController extends Controller
      */
     public function create()
     {
-        $program_of_activities = ProgramOfActivities::all(); 
-        $languages = Language::all()->where('is_valid', 1); 
-        $schools = School::all();  
-        return view('programofactivities.create')->with(['program_of_activities'=>$program_of_activities, 'languages'=>$languages, 'schools'=>$schools]); 
+        $languages = Language::all()->where('is_valid', 1);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('programofactivities.create')->with(['languages'=>$languages, 'company_categories'=>$company_categories, 'schools'=>$schools]);
     }
 
     /**
@@ -45,10 +46,11 @@ class ProgramOfActivitiesController extends Controller
     public function store(ProgramOfActivitiesRequest $request)
     {
         $record = new ProgramOfActivities;
-        $record->school_id=$request->school_id;
-        $record->content=$request->content;
-        $record->comments=$request->comments;
-        $record->lang=$request->lang;
+        $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
+        $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
+        $record->lang = $request->lang;
         // Create and redirect
         $record->save();
         $request->session()->flash('message', 'Το πρόγραμμα αποθηκεύτηκε επιτυχώς!');
@@ -66,13 +68,13 @@ class ProgramOfActivitiesController extends Controller
         $lang = Language::where("slag", $language)->first();
         $program_of_activities = ProgramOfActivities::with('languages')->where(["lang" => $lang->id ])->get();        
         $languages = Language::all()->where('is_valid', 1);
-        // $part_top_category = PartsCategories::where("id", $part_parent_category->parent)->first();        
-
+        $schools = School::all();
         return view('programofactivities.index')->with(['program_of_activities'=>$program_of_activities,                                               
-                                                'languages'=>$languages,
-                                                // 'part_top_category'=>$part_top_category,
+                                                'languages'=>$languages, 
+                                                'schools'=>$schools,
                                                 ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -84,8 +86,9 @@ class ProgramOfActivitiesController extends Controller
     {
         $program_of_activities = ProgramOfActivities::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
-        $schools = School::all(); 
-        return view('programofactivities.edit')->with(['program_of_activities'=>$program_of_activities, 'languages'=>$languages, 'schools'=>$schools]);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('programofactivities.edit')->with(['program_of_activities'=>$program_of_activities, 'languages'=>$languages, 'company_categories'=>$company_categories,'schools'=>$schools]);
     }
 
     /**
@@ -98,10 +101,11 @@ class ProgramOfActivitiesController extends Controller
     public function update(ProgramOfActivitiesRequest $request, $id)
     {
         $record = ProgramOfActivities::where("id", $id)->first();
-        $record->school_id=$request->school_id;
-        $record->content=$request->content;
-        $record->comments=$request->comments;
-        $record->lang=$request->lang;
+        $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
+        $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
+        $record->lang = $request->lang;
         // Create and redirect
         $record->save();
         $request->session()->flash('message', 'Το πρόγραμμα αποθηκεύτηκε επιτυχώς!');
@@ -119,7 +123,7 @@ class ProgramOfActivitiesController extends Controller
         $record = ProgramOfActivities::where("id", $id)->first();
         $record->delete();
 
-        session()->flash('message', 'Το πρόγραμμα διαγράφηκε επιτυχώς!');
+        session()->flash('message', 'Το Υποβληθείσα Αίτηση διαγράφηκε επιτυχώς!');
         return redirect('/program_of_activities');
     }
 }

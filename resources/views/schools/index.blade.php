@@ -18,7 +18,7 @@
     </div>
 @endif
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table89" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Χώρα</th>
@@ -52,16 +52,16 @@
 	            <td>{{ $school->fax }}</td>	            	
 	            <td>
 	            	@if ($school->cancelled == 1)
-		    			<img src="{{ URL::asset('assets/images/cancel.png') }}" class="center-block" width="18" height="18">
+		    			<img src="{{ URL::asset('assets/images/cancel.png') }}" class="center-block" title="{{ $school->cancelled }}" width="18" height="18">
 		    		@else
-		    			<img src="{{ URL::asset('assets/images/check.png') }}" class="center-block" width="18" height="18">
+		    			<img src="{{ URL::asset('assets/images/check.png') }}" class="center-block" title="{{ $school->cancelled }}" width="18" height="18">
 		    		@endif
 	            </td>
 	            <td>
 	            	@if ($school->not_submitted == 1)
-		    			<img src="{{ URL::asset('assets/images/cancel.png') }}" class="center-block" width="18" height="18">
+		    			<img src="{{ URL::asset('assets/images/cancel.png') }}" class="center-block" title="{{ $school->not_submitted }}" width="18" height="18">
 		    		@else
-		    			<img src="{{ URL::asset('assets/images/check.png') }}" class="center-block" width="18" height="18">
+		    			<img src="{{ URL::asset('assets/images/check.png') }}" class="center-block" title="{{ $school->not_submitted }}" width="18" height="18">
 		    		@endif
 	            </td>
 	            <td>{{ $school->sent_section }}</td>
@@ -77,7 +77,7 @@
                         		data-toggle="modal" 
                         		data-target="#confirmDelete" 
                         		data-title="Διαργαφή Σχολείου" 
-                        		data-message="Είσαι σίγουρος(η) για την διαγραφή του Σχολείου - {{ $school->name }}. Επίσης θα διαγραφούν τα 'emails', τα 'letter of intents' και τα 'programs of activities' που αφορούν το συγκεκριμένο Σχολείο.">
+                        		data-message="Είσαι σίγουρος(η) για την διαγραφή του Σχολείου - {{ $school->name }}. Επίσης θα διαγραφούν τα 'emails', τα 'letter of intents' , τα 'programs of activities', οι 'ολοκληρωμένες' και 'υποβληθείσες αιτήσεις' και οι 'οδηγίες' που αφορούν το συγκεκριμένο Σχολείο.">
         						<i class="fa fa-lg fa-trash"></i>
         				</button>
                     </form>

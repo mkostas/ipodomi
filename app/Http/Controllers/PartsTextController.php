@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\PartsText;
 use App\PartsCategories;
 use App\Language;
+use App\CompanyCategory;
 use DB;
 
 class PartsTextController extends Controller
@@ -23,11 +24,13 @@ class PartsTextController extends Controller
         $part_category = PartsCategories::where("id", $id)->first();
         $part_parent_category = PartsCategories::where("id", $part_category->parent)->first();
         $languages = Language::all()->where('is_valid', 1);
+        $company_categories = CompanyCategory::all();
 
-        return view('partstext.index')->with(['parts_text'=>$parts_text,
-                                                'part_category'=>$part_category,
-                                                'part_parent_category'=>$part_parent_category,
-                                                'languages'=>$languages,
+        return view('partstext.index')->with(['parts_text' => $parts_text,
+                                                'part_category' => $part_category,
+                                                'part_parent_category' => $part_parent_category,
+                                                'languages' => $languages,
+                                                'company_categories' => $company_categories,
                                                 // 'part_top_category'=>$part_top_category,
                                                 ]);
     }
@@ -41,8 +44,9 @@ class PartsTextController extends Controller
     {   
         $part_category = PartsCategories::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
+        $company_categories = CompanyCategory::all();
         
-        return view('partstext.create')->with(['part_category'=>$part_category, 'languages'=>$languages]);
+        return view('partstext.create')->with(['part_category'=>$part_category, 'languages'=>$languages, 'company_categories' => $company_categories]);
     }
 
     /**
@@ -57,6 +61,7 @@ class PartsTextController extends Controller
         $record = new PartsText;
         $record->part_category=$request->part_category;
         $record->content=$request->content;
+        $record->company_category=$request->company_category;
         $record->lang=$request->lang;
 
         // Create and redirect
@@ -81,12 +86,14 @@ class PartsTextController extends Controller
         $part_category = PartsCategories::where("id", $id)->first();
         $part_parent_category = PartsCategories::where("id", $part_category->parent)->first();
         $languages = Language::all()->where('is_valid', 1);
+        $company_categories = CompanyCategory::all();
         // $part_top_category = PartsCategories::where("id", $part_parent_category->parent)->first();        
 
         return view('partstext.index')->with(['parts_text'=>$parts_text,
                                                 'part_category'=>$part_category,
                                                 'part_parent_category'=>$part_parent_category,
                                                 'languages'=>$languages,
+                                                'company_categories' => $company_categories,
                                                 // 'part_top_category'=>$part_top_category,
                                                 ]);
     }
@@ -101,8 +108,9 @@ class PartsTextController extends Controller
     {
         $parts_text = PartsText::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
+        $company_categories = CompanyCategory::all();
         // $part_category = PartsCategories::where("id", $id)->first();
-        return view('partstext.edit')->with(['parts_text'=>$parts_text, 'languages'=>$languages]);
+        return view('partstext.edit')->with(['parts_text'=>$parts_text, 'languages'=>$languages, 'company_categories'=>$company_categories]);
     }
 
     /**
@@ -117,6 +125,7 @@ class PartsTextController extends Controller
         $record = PartsText::where("id", $id)->first();
         $record->part_category=$request->part_category;
         $record->content=$request->content;
+        $record->company_category=$request->company_category;
         $record->lang=$request->lang;
         
         // Create and redirect

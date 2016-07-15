@@ -15,10 +15,12 @@
     <div id="message_tab" class="alert alert-success">{{ Session::get('message') }}</div>
 @endif
 
-<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="table4" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th style="width:80%">Όνομα αρχείου</th>
+            <th style="width:60%">Όνομα αρχείου</th>
+            <th style="width:10%">Σχολείο</th>
+            <th style="width:10%">Ειδικότητα</th>
             <th style="width:10%">Γλώσσα</th>
             <th style="width:10%">Επεξεργασία/Διαγραφή</th>             
         </tr>
@@ -29,6 +31,11 @@
 	            <td>
                   <a href="{{ $submitted_application->filepath }}" download>{{ $submitted_application->name }}</a>                  
               </td>
+
+              <td>{{ $submitted_application->schools->name }}</td>
+
+              <td>{{ $submitted_application->company_categories->type }}</td>
+              
               <td>
                   @foreach ($submitted_application->languages as $language)
                       <img src="{{ $language->icon }}" class="center-block" width="24" height="24" title="{{ $language->name }}" alt="{{ $language->name }}">                        

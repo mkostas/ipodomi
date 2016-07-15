@@ -26,6 +26,7 @@ class PartsTextRequest extends Request
         return [
             'part_category' => 'required|int',
             'content' => 'required|string',
+            'company_category' => 'required|int',
             'lang' => 'required|int',
         ];
     }

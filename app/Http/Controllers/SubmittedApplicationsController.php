@@ -7,6 +7,8 @@ use App\Http\Requests\SubmittedApplicationRequest;
 use App\Http\Requests;
 use App\SubmittedApplication;
 use App\Language;
+use App\CompanyCategory;
+use App\School;
 
 class SubmittedApplicationsController extends Controller
 {
@@ -15,9 +17,10 @@ class SubmittedApplicationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index() 
+    {
         $submitted_applications = SubmittedApplication::select('submitted_applications.*', 'languages.icon')->join('languages', 'submitted_applications.lang', '=', 'languages.id')->where('is_valid',1)->orderBy('submitted_applications.updated_at', 'desc')->get();
-        $languages = Language::all()->where('is_valid', 1);     
+        $languages = Language::all()->where('is_valid', 1); 
         return view('submittedapplications.index')->with(['submitted_applications'=>$submitted_applications, 'languages' => $languages]);
     }
 
@@ -29,7 +32,9 @@ class SubmittedApplicationsController extends Controller
     public function create()
     {   
         $languages = Language::all()->where('is_valid', 1);
-        return view('submittedapplications.create')->with(['languages'=>$languages]);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('submittedapplications.create')->with(['languages'=>$languages, 'company_categories'=>$company_categories, 'schools'=>$schools]);
     }
 
     /**
@@ -42,6 +47,8 @@ class SubmittedApplicationsController extends Controller
     {
         $record = new SubmittedApplication;
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect
@@ -60,10 +67,11 @@ class SubmittedApplicationsController extends Controller
     {
         $lang = Language::where("slag", $language)->first();
         $submitted_applications = SubmittedApplication::with('languages')->where(["lang" => $lang->id ])->get();        
-        $languages = Language::all()->where('is_valid', 1);       
-
+        $languages = Language::all()->where('is_valid', 1);
+        $schools = School::all();
         return view('submittedapplications.index')->with(['submitted_applications'=>$submitted_applications,                                               
-                                                'languages'=>$languages,
+                                                'languages'=>$languages, 
+                                                'schools'=>$schools,
                                                 ]);
     }
 
@@ -77,7 +85,9 @@ class SubmittedApplicationsController extends Controller
     {
         $submitted_applications = SubmittedApplication::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
-        return view('submittedapplications.edit')->with(['submitted_applications'=>$submitted_applications, 'languages'=>$languages]);
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('submittedapplications.edit')->with(['submitted_applications'=>$submitted_applications, 'languages'=>$languages, 'company_categories'=>$company_categories,'schools'=>$schools]);
     }
 
     /**
@@ -91,6 +101,8 @@ class SubmittedApplicationsController extends Controller
     {
         $record = SubmittedApplication::where("id", $id)->first();
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect

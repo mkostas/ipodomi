@@ -7,6 +7,10 @@ use App\Http\Requests\CompanyCategoryRequest;
 use App\Http\Requests;
 use App\CompanyCategory;
 use App\Company;
+use App\ProgramOfActivities;
+use App\Instructions;
+use App\SubmittedApplication;
+use App\CompletedApplication;
 
 class CompanyCategoryController extends Controller
 {
@@ -97,10 +101,34 @@ class CompanyCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $record = CompanyCategory::where("id", $id)->first();
-        $record->delete();
-        $record = Company::where("category_id", $id)->first();
-        $record->delete();
+        $record_company_category = CompanyCategory::where("id", $id)->first();
+        $record_company_category->delete();
+
+        $record_company = Company::where("category_id", $id)->get();
+        if ($record_company->count()) {
+            Company::where("category_id", $id)->delete();
+        }
+
+        $record_program_of_activities = ProgramOfActivities::where("company_category", $id)->get();
+        if ($record_program_of_activities->count()) {
+            ProgramOfActivities::where("company_category", $id)->delete();
+        }
+
+
+        $record_instructions = Instructions::where("company_category", $id)->get();
+        if ($record_instructions->count()) {
+            Instructions::where("company_category", $id)->delete();
+        }
+
+        $record_completed_applications = CompletedApplication::where("company_category", $id)->get();
+        if ($record_completed_applications->count()) {
+            CompletedApplication::where("company_category", $id)->delete();
+        }
+
+        $record_submitted_applications = SubmittedApplication::where("company_category", $id)->get();
+        if ($record_submitted_applications->count()) {
+            SubmittedApplication::where("company_category", $id)->delete();
+        }
 
         session()->flash('message', 'Η Κατηγορία διαγράφηκε επιτυχώς!');
         return redirect('/company_category');

@@ -19,22 +19,33 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-		        <div class="form-group">
+
+				<div class="form-group">
 				  	<label for="sel1">Σχολείο <span class="red">*</span></label>				  	
-				  	<select class="form-control select2" name="school_id">
+				  	<select class="form-control select2" name="school">
 					    @foreach ($schools as $key=>$school)
-					    	@if($program_of_activities->school_id == $school->id) 
+					    	@if($program_of_activities->school == $school->id) 
 					    		<option value="{{ $school->id }}" selected='selected'>{{ $school->name }}</option>
 					    	@else
 			                	<option value="{{ $school->id }}"  >{{ $school->name }}</option>
 			                @endif
 			            @endforeach
 				  	</select>
-				</div>	
-		        <div class="form-group">
-		            <label>Περιεχόμενο <span class="red">*</span></label>
-		            <textarea class="form-control" rows="15" name="content">{{ $program_of_activities->content }}</textarea>         
-		        </div>
+				</div>
+
+				<div class="form-group">
+				  	<label for="sel1">Ειδικότητα <span class="red">*</span></label>				  	
+				  	<select class="form-control select2" name="company_category">
+					    @foreach ($company_categories as $key=>$company_category)
+					    	@if($program_of_activities->company_category == $company_category->id) 
+					    		<option value="{{ $company_category->id }}" selected='selected'>{{ $company_category->type }}</option>
+					    	@else
+			                	<option value="{{ $company_category->id }}"  >{{ $company_category->type }}</option>
+			                @endif
+			            @endforeach
+				  	</select>
+				</div>
+
 		        <div class="form-group">
 				  	<label>Γλώσσα <span class="red">*</span></label>
 				  	<select class="form-control select2" name="lang">
@@ -47,10 +58,8 @@
 			            @endforeach
 				  	</select>
 				</div>
-		        <div class="form-group">
-		            <label>Σχόλια </label>
-		            <textarea class="form-control" rows="15" name="comments">{{ $program_of_activities->comments }}</textarea>		            
-		        </div>	        
+					
+				<input type="hidden" class="form-control" name="filepath" value="{{ $program_of_activities->filepath }}">	       
 		        	        
 			</div>
 		</div>

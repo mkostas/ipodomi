@@ -7,6 +7,8 @@ use App\Http\Requests\InstructionsRequest;
 use App\Http\Requests;
 use App\Instructions;
 use App\Language;
+use App\CompanyCategory;
+use App\School;
 
 class InstructionsController extends Controller
 {
@@ -18,7 +20,7 @@ class InstructionsController extends Controller
     public function index()
     {
         $instructions = Instructions::select('instructions.*', 'languages.icon')->join('languages', 'instructions.lang', '=', 'languages.id')->where('is_valid',1)->orderBy('instructions.updated_at', 'desc')->get();
-        $languages = Language::all()->where('is_valid', 1);     
+        $languages = Language::all()->where('is_valid', 1);        
         return view('instructions.index')->with(['instructions'=>$instructions, 'languages' => $languages]);
     }
 
@@ -30,7 +32,9 @@ class InstructionsController extends Controller
     public function create()
     {
         $languages = Language::all()->where('is_valid', 1);
-        return view('instructions.create')->with(['languages'=>$languages]);        
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('instructions.create')->with(['languages'=>$languages, 'company_categories'=>$company_categories, 'schools'=>$schools]);        
     }
 
     /**
@@ -43,6 +47,8 @@ class InstructionsController extends Controller
     {
         $record = new Instructions;
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect
@@ -62,9 +68,12 @@ class InstructionsController extends Controller
         $lang = Language::where("slag", $language)->first();
         $instructions = Instructions::with('languages')->where(["lang" => $lang->id ])->get();        
         $languages = Language::all()->where('is_valid', 1);       
-
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
         return view('instructions.index')->with(['instructions'=>$instructions,                                               
                                                 'languages'=>$languages,
+                                                'company_categories'=>$company_categories,
+                                                'schools'=>$schools,
                                                 ]);
     }
 
@@ -78,7 +87,9 @@ class InstructionsController extends Controller
     {
         $instructions = Instructions::where("id", $id)->first();
         $languages = Language::all()->where('is_valid', 1);
-        return view('instructions.edit')->with(['instructions'=>$instructions, 'languages'=>$languages]);        
+        $company_categories = CompanyCategory::all();
+        $schools = School::all();
+        return view('instructions.edit')->with(['instructions'=>$instructions, 'languages'=>$languages, 'company_categories'=>$company_categories, 'schools'=>$schools]);        
     }
 
     /**
@@ -92,6 +103,8 @@ class InstructionsController extends Controller
     {
         $record = Instructions::where("id", $id)->first();
         $record->filepath = $request->filepath;
+        $record->company_category = $request->company_category;
+        $record->school = $request->school;
         $record->name = substr($record->filepath, strrpos($record->filepath, '/') + 1);
         $record->lang = $request->lang;
         // Create and redirect

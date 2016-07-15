@@ -12,4 +12,9 @@ class CompanyCategory extends Model
   	{
     	return $this->belongsTo('App\Company');
   	}
+
+  	public function part_text()
+  	{
+    	return $this->belongsTo('App\Company');
+  	}
 }
